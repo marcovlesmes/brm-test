@@ -1,0 +1,27 @@
+version: "20.10.8"
+services:
+  laravel-db:
+    image: mysql-5.7
+    environment: 
+      MYSQL_ROOT_PASSWORD: Admin
+      MYSQL_DATABASE: laravel_dev
+      MYSQL_USER: usr_laravel
+      MYSQL_PASSWORD: usr.pass.laravel_dev
+    ports: 
+      - 33069:3306
+    volumes: 
+      - ./database/schemas/:/var/lib/mysql
+    networks:
+      laravel_dev_net:
+        ipv4_address: 172.21.100.9
+  laravel-dev:
+    build:
+      context: ./
+      dockerfile: dockerfile
+    ports: 
+      - 8200:80
+    volumes: 
+      - ./test-prod:/var/www/
+      - ./test-prod/public:/var/www/html
+    networks:
+      ipv6_address: 172
